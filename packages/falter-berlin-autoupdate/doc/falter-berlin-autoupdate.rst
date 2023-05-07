@@ -35,3 +35,14 @@ Um ein Autoupdate im Netz anzustoßen, müssen (standardmäßig) mindestens 3 Sc
 2. Signatur erzeugen mit: ``./usign -S -m autoupdate.json -s geheimer_Schluessel.sec``. Die Signatur ist die Datei ``autoupdate.json.sig``
 3. Die Signatur-Datei unter ``https://firmware.berlin.freifunk.net/stable/autoupdate.json.$NUM.sig`` hochladen. ``$NUM`` ist eine fortlaufende Nummer, beginnend ab 1. Wenn du keinen Zugang zum selector-Server hast, schicke die Signatur-Datei bitte an einen Maintainer.
 4. Sich zurücklehnen und freuen, dass mehr aktuelle Firmware im Netz läuft.
+
+Für Maintainer: Ein Autoupdate vorbereiten
+------------------------------------------
+
+1. Release bauen (siehe Doku für Releases)
+2. Release mit ``./fetch_release.sh`` in den `Firmwareselector <https://selector.berlin.freifunk.net>`_ übertragen. Es muss noch nicht ins Dropdownmenü eingetragen werden, aber die JSON-Dateien für die einzelnen Router müssen vorhanden und zugriefbar sein.
+3. ``autoupdate.json`` mit dem script ``/usr/local/src/generate_autoupdate_json.py`` erzeugen und unter ``/usr/local/src/www/htdocs/buildbot/stable`` ablegen.
+4. Contributer informieren, dass autoupdate.json nun signiert werden kann
+5. Signaturen in entsprechender Nummerierung (siehe oben) in das gleiche Verzeichnis legen.
+
+Es ist sinnvoll, nicht alle Signaturen auf einmal hochzuladen. In der vergangenheit haben wir zuerst zwei Signaturen hochgeladen. Kontrollierbare Test-Router, welche auf zwei Zertifikate eingestellt waren, haben dann ein Update gemacht. Wenn dort alles funktioniert, können die weiteren Zertifikate hochgeladen werden, sodass der Rest des Netzes folgt.
